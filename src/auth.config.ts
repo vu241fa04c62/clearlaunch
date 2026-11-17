@@ -14,6 +14,8 @@ const loginSchema = z.object({
  * The actual credential verification happens in auth.ts (Node runtime).
  */
 export default {
+  trustHost: true,
+  secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET || "0ac0cdccfd4fc4b4b3f3355840070ebfef406c8125150f909d453169913b2e73",
   providers: [
     Credentials({
       name: "credentials",
