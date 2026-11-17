@@ -1,3 +1,4 @@
+import { NextResponse } from "next/server";
 import NextAuth from "next-auth";
 import authConfig from "@/auth.config";
 
@@ -12,14 +13,13 @@ const ROLE_DASHBOARD_MAP: Record<string, string> = {
 };
 
 export default auth((req) => {
-  const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
-  const pathname = nextUrl.pathname;
+  const pathname = req.nextUrl.pathname;
 
   // Protect all /dashboard routes and /settings
   if (pathname.startsWith("/dashboard") || pathname.startsWith("/settings")) {
     if (!isLoggedIn) {
-      return Response.redirect(new URL("/login", nextUrl));
+      return NextResponse.redirect(new URL("/login", req.url));
     }
   }
 
@@ -27,10 +27,10 @@ export default auth((req) => {
   if (pathname === "/dashboard" || pathname === "/dashboard/") {
     const userRole = (req.auth?.user as any)?.role as string;
     const targetDashboard = ROLE_DASHBOARD_MAP[userRole] || "/dashboard/explore";
-    return Response.redirect(new URL(targetDashboard, nextUrl));
+    return NextResponse.redirect(new URL(targetDashboard, req.url));
   }
 
-  return;
+  return NextResponse.next();
 });
 
 export const config = {

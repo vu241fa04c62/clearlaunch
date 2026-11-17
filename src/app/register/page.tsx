@@ -83,7 +83,7 @@ export default function RegisterPage() {
       }
 
       // Redirect to login on success
-      router.push("/login?registered=true");
+      window.location.href = "/login?registered=true";
     } catch {
       setError("An unexpected error occurred. Please try again.");
     } finally {

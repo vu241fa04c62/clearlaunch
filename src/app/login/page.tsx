@@ -32,8 +32,8 @@ export default function LoginPage() {
       if (result?.error) {
         setError("Invalid credentials. Please verify your email and password.");
       } else {
-        router.push("/dashboard");
-        router.refresh();
+        // Use full navigation to ensure session cookie is processed on both cloud and local
+        window.location.href = "/dashboard";
       }
     } catch {
       setError("An unexpected error occurred. Please try again.");
