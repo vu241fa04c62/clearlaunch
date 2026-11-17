@@ -1,0 +1,241 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ========================================================
+   CLEAR LAUNCH 🚀 — DUAL THEME SYSTEM
+   Dark: "Cyber Obsidian" (#090D16, Indigo #6366F1, Emerald #10B981)
+   Light: "Alabaster & Royal" (#F8FAFC, Royal #2563EB, Violet #7C3AED)
+   ======================================================== */
+
+:root {
+  /* Light Mode Defaults ("Alabaster & Royal") */
+  --bg-primary: #F8FAFC;
+  --bg-surface: #FFFFFF;
+  --bg-surface-elevated: #F1F5F9;
+  --border-subtle: #E2E8F0;
+  --border-prominent: #CBD5E1;
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #94A3B8;
+
+  --accent-primary: #2563EB; /* Royal Blue */
+  --accent-primary-hover: #1D4ED8;
+  --accent-secondary: #7C3AED; /* Deep Violet */
+  --accent-success: #059669; /* Emerald */
+  --accent-glow: rgba(37, 99, 235, 0.15);
+
+  --card-bg: rgba(255, 255, 255, 0.92);
+  --card-border: rgba(226, 232, 240, 0.9);
+  --card-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+
+  /* Legacy variables aliased for compatibility */
+  --background: var(--bg-primary);
+  --foreground: var(--text-primary);
+  --surface: var(--bg-surface);
+  --accent: var(--accent-primary);
+}
+
+.dark {
+  /* Dark Mode ("Cyber Obsidian") */
+  --bg-primary: #090D16;
+  --bg-surface: #0F172A;
+  --bg-surface-elevated: #1E293B;
+  --border-subtle: rgba(51, 65, 85, 0.6);
+  --border-prominent: rgba(99, 102, 241, 0.35);
+  --text-primary: #F8FAFC;
+  --text-secondary: #CBD5E1;
+  --text-muted: #64748B;
+
+  --accent-primary: #6366F1; /* Electric Indigo */
+  --accent-primary-hover: #818CF8;
+  --accent-secondary: #10B981; /* Electric Emerald */
+  --accent-success: #10B981;
+  --accent-glow: rgba(99, 102, 241, 0.25);
+
+  --card-bg: rgba(15, 23, 42, 0.65);
+  --card-border: rgba(51, 65, 85, 0.7);
+  --card-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
+
+  --background: var(--bg-primary);
+  --foreground: var(--text-primary);
+  --surface: var(--bg-surface);
+  --accent: var(--accent-primary);
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ========================================================
+   CRITICAL BUG FIX: Input Autofill Override
+   Prevents ugly bright yellow/white browser autofill overrides
+   ======================================================== */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--text-primary) !important;
+  -webkit-box-shadow: 0 0 0px 1000px var(--bg-surface) inset !important;
+  box-shadow: 0 0 0px 1000px var(--bg-surface) inset !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+  border-color: var(--border-prominent) !important;
+}
+
+/* ========================================================
+   Reusable Glassmorphic and UI Utility Classes
+   ======================================================== */
+.glass-panel {
+  background: var(--card-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  border-radius: 1rem;
+}
+
+.glass-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  border-radius: 0.875rem;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  border-color: var(--accent-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px -8px var(--accent-glow);
+}
+
+/* Backward-compatible card-surface */
+.card-surface {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  border-radius: 0.875rem;
+}
+
+/* Gradient Buttons */
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  color: #FFFFFF;
+  font-weight: 600;
+  border-radius: 0.75rem;
+  padding: 0.65rem 1.4rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 14px 0 var(--accent-glow);
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  opacity: 0.94;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px 0 var(--accent-glow);
+}
+
+.btn-secondary {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  font-weight: 500;
+  border-radius: 0.75rem;
+  padding: 0.65rem 1.4rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background: var(--bg-surface-elevated);
+  border-color: var(--border-prominent);
+}
+
+/* Backward-compatible btn-gold */
+.btn-gold {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  color: #FFFFFF;
+  font-weight: 600;
+  border-radius: 0.75rem;
+  padding: 0.65rem 1.4rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-gold:hover {
+  opacity: 0.92;
+  box-shadow: 0 6px 20px 0 var(--accent-glow);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--accent-primary);
+  border: 1px solid var(--accent-primary);
+  font-weight: 600;
+  border-radius: 0.75rem;
+  padding: 0.65rem 1.4rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-outline:hover {
+  background: var(--accent-glow);
+}
+
+.text-gold-gradient {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ========================================================
+   Interactive Aurora & Background Mesh Keyframes
+   ======================================================== */
+@keyframes aurora {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.45;
+  }
+  50% {
+    transform: translate(30px, -20px) scale(1.1);
+    opacity: 0.7;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-aurora {
+  animation: aurora 10s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
